@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.management.RuntimeErrorException;
+
+import com.sun.xml.internal.txw2.IllegalAnnotationException;
+
 public class GuestDao {
 
 	private Connection conn;
@@ -27,10 +31,10 @@ public class GuestDao {
 	}
 
 	// public int selectAll() {
-	public ArrayList selectAll() throws Exception {
+	public ArrayList<GuestDto> selectAll() throws Exception {
 		// TODO Auto-generated method stub
 
-		ArrayList list = new ArrayList();
+		ArrayList<GuestDto> list = new ArrayList<GuestDto>();
 		String sql = "SELECT * FROM GUEST";
 		try {
 			System.out.println(sql);
@@ -77,6 +81,21 @@ public class GuestDao {
 		// list.add(102);
 		// list.add(103);
 		return list;
+	}
+	
+	public void insertOne(GuestDto dto) throws Exception{
+		String sql = "insert into guest values(?,?,sysdate,?)";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, dto.getSabun());
+		pstmt.setString(2, dto.getName());
+		pstmt.setInt(3, dto.getPay());
+		int result = pstmt.executeUpdate();
+		if(result<1)
+			throw new IllegalArgumentException();
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
 	}
 
 }

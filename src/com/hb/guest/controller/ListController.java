@@ -26,7 +26,7 @@ public class ListController extends HttpServlet {
 
 		// int a = dao.selectAll();
 //		System.out.println(a);
-		ArrayList list = null;
+		ArrayList<GuestDto> list = null;
 		try {
 			list = dao.selectAll();
 //			for(int i=0;i<list.size();i++){
