@@ -24,7 +24,6 @@ public class IndexController extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("msg2", "session : javaworld");
 		System.out.println(session.getAttribute("msg2"));
-
 		request.getRequestDispatcher("/main.jsp").forward(request, response);
 
 		// response.sendRedirect("Ex01.do");
@@ -35,3 +34,4 @@ public class IndexController extends HttpServlet {
 	}
 
 }
+
