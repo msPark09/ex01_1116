@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./../css/grid.css" />
 <title>Insert title here</title>
 <style></style>
 <script
@@ -46,12 +47,22 @@
 		}
 	%>
 	<hr />
-<p><a href="./add.do">add</a></p>
+	<p>
+		<a href="./add.do">add</a>
+	</p>
 	<hr />
-	<c:forEach items="${list }" var="dto">
-		<p>${dto.sabun },${dto.name }, ${dto.nalja }, ${dto.pay }</p>
-
-	</c:forEach>
-
+	<div class="container">
+		<c:forEach items="${list }" var="dto">
+			<a href="./detail.do?idx=${dto.sabun }">
+				<div class="row">
+					<div class="grid3">${dto.sabun }</div>
+					<div class="grid3">${dto.name }</div>
+					<div class="grid3">${dto.nalja }</div>
+					<div class="grid3">${dto.pay }</div>
+				</div>
+			</a>
+			<!-- 		<p>${dto.sabun },${dto.name }, ${dto.nalja }, ${dto.pay }</p>-->
+		</c:forEach>
+	</div>
 </body>
 </html>

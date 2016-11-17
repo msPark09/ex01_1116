@@ -22,8 +22,8 @@ public class GuestDao {
 	public GuestDao() {
 		try {
 			Class.forName("org.h2.Driver");
-			conn=DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test"
-					, "sa", "");
+			conn = DriverManager.getConnection(
+					"jdbc:h2:tcp://localhost/~/test", "sa", "");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,12 +42,12 @@ public class GuestDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-//				HashMap map = new HashMap();
-//				map.put("sabun", rs.getInt("sabun"));
-//				map.put("name", rs.getString("name"));
-//				map.put("nalja", rs.getDate("nalja"));
-//				map.put("pay", rs.getInt("pay"));
-//				list.add(map);
+				// HashMap map = new HashMap();
+				// map.put("sabun", rs.getInt("sabun"));
+				// map.put("name", rs.getString("name"));
+				// map.put("nalja", rs.getDate("nalja"));
+				// map.put("pay", rs.getInt("pay"));
+				// list.add(map);
 				GuestDto dto = new GuestDto();
 				dto.setSabun(rs.getInt("sabun"));
 				dto.setName(rs.getString("name"));
@@ -82,15 +82,15 @@ public class GuestDao {
 		// list.add(103);
 		return list;
 	}
-	
-	public void insertOne(GuestDto dto) throws Exception{
+
+	public void insertOne(GuestDto dto) throws Exception {
 		String sql = "insert into guest values(?,?,sysdate,?)";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, dto.getSabun());
 		pstmt.setString(2, dto.getName());
 		pstmt.setInt(3, dto.getPay());
 		int result = pstmt.executeUpdate();
-		if(result<1)
+		if (result < 1)
 			throw new IllegalArgumentException();
 		if (pstmt != null)
 			pstmt.close();
@@ -98,4 +98,67 @@ public class GuestDao {
 			conn.close();
 	}
 
+	public GuestDto selectOne(int sabun) throws Exception {
+		// TODO Auto-generated method stub
+		GuestDto dto = null;
+		String sql = "SELECT * FROM GUEST " + "where sabun=?";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sabun);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				dto = new GuestDto();
+				dto.setSabun(rs.getInt("sabun"));
+				dto.setName(rs.getString("name"));
+				dto.setNalja(rs.getDate("nalja"));
+				dto.setPay(rs.getInt("pay"));
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		return dto;
+	}
+
+	public void updateOne(GuestDto dto) throws Exception {
+		// TODO Auto-generated method stub
+		String sql = "update guest set name=?, pay=? where sabun=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getName());
+			pstmt.setInt(2, dto.getPay());
+			pstmt.setInt(3, dto.getSabun());
+			pstmt.executeUpdate();
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+	}
+
+	public void deleteOne(int sabun) throws Exception {
+		// TODO Auto-generated method stub
+		String sql = "delete from guest where sabun=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sabun);
+			pstmt.executeUpdate();
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		
+	}
 }

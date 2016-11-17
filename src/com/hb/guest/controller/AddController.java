@@ -18,8 +18,9 @@ public class AddController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		request.getRequestDispatcher("./add.jsp").forward(request, response);
+		request.setAttribute("title", "입력");
+		request.setAttribute("action", "action=\"add.do\"");
+		request.getRequestDispatcher("/WEB-INF/guest/add.jsp").forward(request, response);
 		//현재디렉토리에서 add.jsp를 찾으려 함
 		//"/guest/add.do"의 현재디렉토리 : /guest
 		//상대경로 다른 폴더 ./../guest2/add.jsp
@@ -47,6 +48,7 @@ public class AddController extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		resp.sendRedirect(url);
 		
 	}
