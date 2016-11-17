@@ -161,4 +161,28 @@ public class GuestDao {
 		}
 		
 	}
+
+	public boolean loginChk(int sabun, String name) throws Exception {
+		// TODO Auto-generated method stub
+		String sql="select count(*) as cnt from guest where sabun=? and name=?";
+		int result =0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sabun);
+			pstmt.setString(2, name);
+			rs = pstmt.executeQuery();	
+			while(rs.next()){
+				result = rs.getInt("cnt");
+			}
+		} finally {
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		}
+		if(result>0){
+			return true;
+		}
+		return false;
+	}
 }
