@@ -17,17 +17,7 @@ import com.hb.guest.model.GuestDto;
 public class AddController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method
-		Object sess = request.getSession().getAttribute("result");
-		if(sess==null){
-			response.sendRedirect(request.getContextPath()+"/user/login.do");
-			return;
-		}
-		boolean ses = (Boolean)sess;
-		if(!ses){
-			response.sendRedirect(request.getContextPath()+"/guest/list.do");
-			return;
-		}
+		// TODO Auto-generated method stub
 		request.setAttribute("title", "ют╥б");
 		request.setAttribute("action", "action=\"add.do\"");
 		request.getRequestDispatcher("/WEB-INF/guest/add.jsp").forward(request, response);
